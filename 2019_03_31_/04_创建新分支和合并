@@ -1,0 +1,25 @@
+
+
+git checkout -b dev
+	创建新的分支
+	git branch dev
+	git checkout dev
+	
+git branch
+	查看分支
+	
+git add file.txt
+	向分支添加文件
+
+git commit -m 'info'
+	提交文件
+
+git checkout master
+	切换到主分支
+
+git merge dev
+	合并dev分支
+
+git push edc
+	提交
+

@@ -1,0 +1,7 @@
+
+
+git fetch edc
+	抓取edc仓库
+
+git merge edc/master
+	合并edc仓库的主分支

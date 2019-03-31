@@ -1,0 +1,12 @@
+
+file.txt
+	文件夹也可以这样提交
+
+git add file.txt
+
+git commit -m 'commit info'
+
+git push -u edc master
+
+	
+git@github.com:BeCreated/EveryDayCoding.git
