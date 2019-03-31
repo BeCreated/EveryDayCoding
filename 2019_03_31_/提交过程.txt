@@ -6,6 +6,4 @@ git add file.txt
 git commit -m 'commit info'
 
 git push -u edc master
-	用户名：BeCreated
-	密码:Teng1995
-	
+
