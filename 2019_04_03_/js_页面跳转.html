@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面跳转</title>
+</head>
+<style>
+    div {
+        width: 200px;
+        height: 200px;
+        border: solid 1px #84c00b;
+    }
+</style>
+<body>
+<a href="https://www.baidu.com/">MyGithub</a>
+
+<div id="con" onclick="openNewPage()">
+</div>
+
+<div onclick="">
+</div>
+
+<button id="btn" href="https://www.baidu.com/" onclick="openNewPage()">按钮</button>
+
+</body>
+<script>
+    function $(elem) {
+        return window.getNodeById(elem)
+    }
+
+    var url = 'https://www.baidu.com/';
+    function openNewPage(){
+        window.open(url)
+    }
+</script>
+</html>
