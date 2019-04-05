@@ -1,0 +1,110 @@
+
+
+同一个用户名来自不同的IP，会被视为不同的用户。
+    root@localhost
+    root@192.168.0.12
+
+权限类型：
+    管理权限：
+    数据库级别权限：
+    对象级别权限：
+    
+mysql.user:
+    用户列：
+    权限列：普通权限、管理权限
+    安全列
+    资源控制列
+
+和权限相关的表：
+    mysql.user
+    mysql.db
+    mysql.tables_priv
+    mysql.columns_priv
+    mysql.procs_priv
+        Mysql启动后会加载到内存中
+
+查看权限：
+    show grants for root@localhost;
+
+给ten@localhost添加授权
+    grant select on db.table to ten@localhost;
+
+取消授权
+    revoke select on db.table frome ten@localhost;
+
+正则说明：
+    数据库名.*          数据库中的所有
+    数据库名.表         数据库中的某个表
+    数据库名.存储过程    指定数据库中的存储过程
+    *.*               所有数据库
+
+    用户名@ip地址         在该ip下才能访问
+    用户名@192.168.1.%   在该ip段下才能访问
+    用户名@%             在任意ip下访问
+
+
+
+创建新用户：
+    mysql>grant select on *.* to ten@localhost identified by '123456';
+        创建用户ten，密码123456
+
+
+修改用户ten的权限，只对python_db数据库上的表的查询权限    
+    mysql>revoke select on *.* from ten@localhost;
+    mysql>grant select on python_db.* to ten@localhost;
+        添加select权限
+
+
+创建账号：
+    mysql>grant all privileges on *.* to ten@localhost identified by '123456';
+
+授权super，process，file权限给ten@localhost；
+    mysql>grant super,process,file on python_db.* to ten@localhost;
+    mysql>grant super,process,file on *.* to ten@localhost;
+
+        *.*         所有的数据库及表
+        python_db.* python_db的数据库及表
+
+只授权登录权限给 ten
+    msyql>grant usage on *.* to ten@localhost;
+
+查看账号权限
+    mysql>show grants for ten@localhost；
+
+
+删除账号：
+    mysql>show grants for ten@localhost\G;
+
+    mysql>drop user ten@localhost;
+        删除user表中的ten@localhost，等于删除该用户记录。
+
+
+mysql启动与权限表加载问题：
+    mysql启动时，会将权限表的数据加载到内存中，当账号通过身份认证后，
+    就在内存中进行权限存取，
+    revoke,grant,set password,raname user，等命令修改用户权限时，
+    mysql会主动重新加载更新后的权限表
+
+    但insert,update,delete等sql语句直接操作权限表修改账号权限时，
+    服务器是不会主动重新加载权限表的，需要通过命令告诉服务器去加载权限表
+
+FLUSH privileges;
+重新加载权限表
+
+
+
+修改用户密码：
+    shell>mysqladmin -u ten -h localhost password '123456'
+    
+    mysql>SET PASSWORD FOR ten@localhost = PASSWORD('123456');
+
+
+如果是更改自己的密码
+    mysql>SET PASSWORD = PASSWORD('123')
+
+    mysql>GRANT USAGE ON *.* TO ten@localhost IDENTIFIED BY '123456';
+
+    mysql>UPDATE mysql.user SET password = PASSWORD('123456')
+        where user = 'ten' and host = 'localhost';
+    mysql>FLUSH privileges;
+
